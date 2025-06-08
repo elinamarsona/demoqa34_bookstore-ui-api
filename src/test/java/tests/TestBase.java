@@ -43,10 +43,10 @@ public class TestBase {
                 "enableVideo", true
         ));
         Configuration.browserCapabilities = capabilities;
-    }
-    @BeforeEach
-    void addAllureListener() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
+
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true)
+                .savePageSource(true));
     }
 
     @AfterEach
@@ -55,6 +55,5 @@ public class TestBase {
         Attach.pageSource();
         Attach.browserConsoleLogs();
         Attach.addVideo();
-        closeWebDriver();
     }
 }
