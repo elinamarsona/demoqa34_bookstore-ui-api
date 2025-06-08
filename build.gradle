@@ -47,10 +47,7 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(Test) {
     useJUnitPlatform()
-
-    systemProperty "userName", System.getProperty("userName")
-    systemProperty "password", System.getProperty("password")
-    systemProperty "isbn", System.getProperty("isbn")
+    systemProperties (System.getProperties())
 
 
     testLogging {
