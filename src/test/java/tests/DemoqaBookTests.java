@@ -53,5 +53,11 @@ public class DemoqaBookTests extends TestBase {
             List<BookModel> books = AccountApiSteps.getUserBooks(token, userId);
             assertThat(books).extracting(BookModel::getIsbn).doesNotContain(isbn);
         });
+
+        step("Переход на страницу профиля", () -> {
+            open("/profile");
+            $("#userName-value").shouldHave(text(userName));
+        });
+
     }
 }

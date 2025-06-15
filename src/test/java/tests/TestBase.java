@@ -24,14 +24,14 @@ public class TestBase {
         RestAssured.baseURI = "https://demoqa.com";
 
         RestAssured.config = RestAssured.config()
-                .sslConfig(SSLConfig.sslConfig().relaxedHTTPSValidation()); // Игнорируем SSL
+                .sslConfig(SSLConfig.sslConfig().relaxedHTTPSValidation()); //Игнорируем SSL
 
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("browserVersion", "128.0");
         Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
         Configuration.pageLoadStrategy = "eager";
-        Configuration.timeout = 5000;
-        Configuration.remote = System.getProperty("remoteUrl");
+        //Configuration.timeout = 5000;
+        Configuration.remote = System.getProperty("remoteUrl", "https://user1:1234@selenoid.autotests.cloud/wd/hub");
         System.out.println(Configuration.browser);
         System.out.println(Configuration.browserVersion);
         System.out.println(Configuration.browserSize);
@@ -43,10 +43,11 @@ public class TestBase {
                 "enableVideo", true
         ));
         Configuration.browserCapabilities = capabilities;
+    }
 
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
-                .screenshots(true)
-                .savePageSource(true));
+    @BeforeEach
+    void addAllureListener() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
     @AfterEach
@@ -55,5 +56,6 @@ public class TestBase {
         Attach.pageSource();
         Attach.browserConsoleLogs();
         Attach.addVideo();
+        closeWebDriver();
     }
 }

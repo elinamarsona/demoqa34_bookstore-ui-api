@@ -1,7 +1,5 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-
 public class TestData {
 
     public static final String userName = System.getProperty("userName","elinamarsona@A1");
